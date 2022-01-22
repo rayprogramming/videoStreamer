@@ -11,3 +11,8 @@ terraform {
 provider "aws" {
   region = "us-east-2"
 }
+
+module "frontend" {
+  source = "./frontend/"
+  name   = "hello world"
+}
