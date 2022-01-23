@@ -24,11 +24,6 @@ on:
 jobs:
   snyk:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        files: [
-          ./infrastructure/
-        ]
     steps:
       - uses: actions/checkout@v2
       - name: Run Snyk to check configuration files for security issues
@@ -42,15 +37,14 @@ jobs:
           # or you can signup for free at https://snyk.io/login
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: "--sarif-file-output=snyk-${{ hashFiles(matrix.files) }}.sarif"
           # Add the path to the configuration file that you would like to test.
           # For example `deployment.yaml` for a Kubernetes deployment manifest
           # or `main.tf` for a Terraform configuration file
-          file:  ${{ matrix.files }}
+          file: ./infrastructure/
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v1
         with:
-          sarif_file: snyk-${{ hashFiles(matrix.files) }}.sarif
+          sarif_file: snyk.sarif
   tfsec:
     name: Run tfsec sarif report
     runs-on: ubuntu-latest
