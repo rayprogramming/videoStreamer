@@ -47,6 +47,7 @@ resource "aws_s3_bucket_object" "index" {
   source = "${path.module}/../../frontend/index.html"
 }
 
+#tfsec:ignore:aws-cloudfront-enable-logging
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = "${var.name}.${var.domain}.s3.us-east-2.amazonaws.com"
