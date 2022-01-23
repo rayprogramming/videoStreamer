@@ -7,6 +7,17 @@ terraform {
   }
 }
 
+# Configure the AWS Provider
+provider "aws" {
+  region = "us-east-2"
+}
+# Configure the AWS Provider
+provider "aws" {
+  region = "us-east-1"
+  alias  = "east-1"
+}
+
+
 resource "aws_s3_bucket" "bucket" {
   bucket = "${var.name}.${var.domain}"
   policy = data.template_file.init.rendered
@@ -73,6 +84,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   depends_on = [aws_acm_certificate_validation.ssl]
+
+  web_acl_id = aws_wafv2_web_acl.waf_acl.id
 }
 
 data "template_file" "init" {
