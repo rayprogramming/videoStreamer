@@ -5,10 +5,9 @@ permissions:
 on:
   schedule:
     - cron: '30 20 * * 0'
-  pull_request:
-    types: [closed]
+  push:
     branches:
-      - main
+      - main  # Set a branch to deploy
 
 jobs:
   infrastructure_build:
