@@ -58,7 +58,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   tags = {
     Environment = "${var.name}.${var.domain}"
   }
-
+  depends_on = [aws_acm_certificate_validation.ssl]
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate.ssl.arn
     ssl_support_method       = "sni-only"
