@@ -41,8 +41,8 @@ jobs:
           # More details in https://github.com/snyk/actions#getting-your-snyk-token
           # or you can signup for free at https://snyk.io/login
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        args: "--sarif-file-output=snyk-${{ hashFiles(matrix.files) }}.sarif"
         with:
+          args: "--sarif-file-output=snyk-${{ hashFiles(matrix.files) }}.sarif"
           # Add the path to the configuration file that you would like to test.
           # For example `deployment.yaml` for a Kubernetes deployment manifest
           # or `main.tf` for a Terraform configuration file
