@@ -25,7 +25,7 @@ resource "aws_s3_bucket_public_access_block" "bucket_pab" {
 }
 
 resource "aws_s3_bucket_object" "index" {
-  bucket = "${var.name}.${var.domain}"
+  bucket = aws_s3_bucket.bucket.id
   key    = "index.html"
   source = "${path.module}/../../frontend/index.html"
 }
