@@ -23,7 +23,7 @@ jobs:
         with:
           aws-region: us-east-2
           role-to-assume: arn:aws:iam::529080338478:role/video_deploy
-          role-session-name: video_deploy
+          role-session-name: gh
       - uses: hashicorp/setup-terraform@v1
 
       - name: Terraform fmt
