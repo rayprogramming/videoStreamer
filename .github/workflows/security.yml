@@ -24,6 +24,19 @@ on:
 jobs:
   snyk:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        files: [
+          ./infrastructure/frontend/main.tf,
+          ./infrastructure/main.tf,
+          ./infrastructure/frontend/main.tf,
+          ./infrastructure/frontend/domain.tf,
+          ./infrastructure/frontend/outputs.tf,
+          ./infrastructure/frontend/variables.tf,
+          ./infrastructure/frontend/s3.tf,
+          ./infrastructure/frontend/polict.tpl,
+          ./infrastructure/frontend/security.tf
+        ]
     steps:
       - uses: actions/checkout@v2
       - name: Run Snyk to check configuration files for security issues
@@ -40,7 +53,7 @@ jobs:
           # Add the path to the configuration file that you would like to test.
           # For example `deployment.yaml` for a Kubernetes deployment manifest
           # or `main.tf` for a Terraform configuration file
-          file: ./infrastructure/main.tf
+          file:  ${{ matrix.files }}
       - name: Run Snyk to check configuration files for security issues
         # Snyk can be used to break the build when it detects security issues.
         # In this case we want to upload the issues to GitHub Code Scanning
