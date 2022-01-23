@@ -21,6 +21,7 @@ provider "aws" {
 resource "aws_s3_bucket" "bucket" {
   bucket = "${var.name}.${var.domain}"
   policy = data.template_file.init.rendered
+  acl    = "private"
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
@@ -32,6 +33,12 @@ resource "aws_s3_bucket" "bucket" {
   versioning {
     enabled = true
   }
+}
+
+resource "aws_s3_bucket_public_access_block" "example" {
+  bucket              = aws_s3_bucket.bucket.id
+  block_public_acls   = true
+  block_public_policy = true
 }
 
 resource "aws_s3_bucket_object" "index" {
