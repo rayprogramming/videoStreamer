@@ -1,4 +1,4 @@
-resource "aws_route53_record" "subdomain-www" {
+resource "aws_route53_record" "subdomain_www" {
   zone_id = var.zoneid
   name    = "www.${var.name}"
   type    = "A"
@@ -11,7 +11,7 @@ resource "aws_route53_record" "subdomain-www" {
   }
 }
 
-resource "aws_route53_record" "subdomain-root" {
+resource "aws_route53_record" "subdomain_root" {
   zone_id = var.zoneid
   name    = var.name
   type    = "A"
