@@ -42,12 +42,12 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     domain_name = "${var.name}.${var.domain}.s3.us-east-2.amazonaws.com"
     origin_id   = "S3-${var.name}.${var.domain}"
   }
-
-  enabled             = true
-  is_ipv6_enabled     = true
-  default_root_object = "index.html"
-  price_class         = "PriceClass_100"
-  aliases             = ["${var.name}.${var.domain}", "www.${var.name}.${var.domain}"]
+  minimum_protocol_version = "TLSv1.2_2021"
+  enabled                  = true
+  is_ipv6_enabled          = true
+  default_root_object      = "index.html"
+  price_class              = "PriceClass_100"
+  aliases                  = ["${var.name}.${var.domain}", "www.${var.name}.${var.domain}"]
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
