@@ -1,3 +1,10 @@
 variable "name" {
-  default = "test"
+}
+variable "domain" {
+
+}
+variable "subdomain" {
+  default = 1
+}
+variable "zoneid" {
 }

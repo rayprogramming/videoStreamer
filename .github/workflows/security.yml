@@ -10,7 +10,7 @@
 # For more examples, including how to limit scans to only high-severity issues
 # and fail PR checks, see https://github.com/snyk/actions/
 
-name: Snyk Infrastructure as Code
+name: Security Scans
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
           # Add the path to the configuration file that you would like to test.
           # For example `deployment.yaml` for a Kubernetes deployment manifest
           # or `main.tf` for a Terraform configuration file
-          file: ./infrastructure/main.tf
+          file: ./infrastructure/
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v1
         with:
@@ -61,8 +61,8 @@ jobs:
       - name: Run tfsec
         uses: tfsec/tfsec-sarif-action@9a83b5c3524f825c020e356335855741fd02745f
         with:
-          working_directory: ./infrastructure/
           sarif_file: tfsec.sarif
+          working_directory: ./infrastructure/
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v1
