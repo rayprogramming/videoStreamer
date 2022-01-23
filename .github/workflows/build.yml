@@ -20,8 +20,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: us-east-2
-          role-to-assume: arn:aws:iam::529080338478:role/video_deploy
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.TERRAFORM_AWS_DEPLOY_ROLE }}
           role-session-name: gh
       - uses: hashicorp/setup-terraform@v1
 
