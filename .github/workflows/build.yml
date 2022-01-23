@@ -16,6 +16,12 @@ jobs:
         working-directory: ./infrastructure
     steps:
       - uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::529080338478:role/video_deploy
+          role-session-name: video_deploy
       - uses: hashicorp/setup-terraform@v1
 
       - name: Terraform fmt
