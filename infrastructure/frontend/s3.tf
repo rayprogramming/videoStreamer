@@ -40,6 +40,6 @@ data "template_file" "init" {
   vars = {
     name       = var.name
     domain     = var.domain
-    cloudfront = aws_cloudfront_distribution.s3_distribution.id
+    cloudfront = aws_cloudfront_origin_access_identity.oai.id
   }
 }
