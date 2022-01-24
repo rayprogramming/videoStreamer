@@ -17,11 +17,19 @@ provider "aws" {
   alias  = "east-1"
 }
 
+resource "aws_cloudfront_origin_access_identity" "oai" {
+  comment = "access-identity-${var.name}.${var.domain}.s3.us-east-2.amazonaws.com"
+}
+
 #tfsec:ignore:aws-cloudfront-enable-logging
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = "${var.name}.${var.domain}.s3.us-east-2.amazonaws.com"
     origin_id   = "S3-${var.name}.${var.domain}"
+
+    s3_origin_config {
+      origin_access_identity = "origin-access-identity/cloudfront/${aws_cloudfront_origin_access_identity.oai.id}"
+    }
   }
 
   enabled             = true
