@@ -29,10 +29,13 @@ resource "aws_s3_bucket_public_access_block" "bucket_pab" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_object" "index" {
+resource "aws_s3_bucket_object" "frontend" {
+  for_each = fileset("${path.module}/../../frontend/", "*")
+
   bucket = aws_s3_bucket.bucket.id
-  key    = "index.html"
-  source = "${path.module}/../../frontend/index.html"
+  key    = each.value
+  source = "${path.module}/../../frontend/${each.value}"
+  etag   = filemd5("${path.module}/../../frontend/${each.value}")
 }
 
 data "template_file" "init" {
