@@ -1,6 +1,26 @@
 resource "aws_kms_key" "mykey" {
   description             = "This key is used to encrypt bucket objects"
   deletion_window_in_days = 10
+  policy = jsonencode(
+    {
+      Id      = "key-default-1"
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action = "kms:*"
+          Effect = "Allow"
+          Principal = {
+            AWS = [
+              "arn:aws:sts::529080338478:assumed-role/video_plan/gh",
+              "arn:aws:iam::529080338478:root",
+            ]
+          }
+          Resource = "*"
+          Sid      = "Enable IAM User Permissions"
+        },
+      ]
+    }
+  )
 }
 
 #tfsec:ignore:aws-s3-enable-bucket-logging
