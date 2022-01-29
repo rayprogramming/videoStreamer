@@ -1,6 +1,6 @@
 plugin "aws" {
   enabled = true
-  version = "0.4.0"
+  version = "0.11.0"
   source  = "github.com/terraform-linters/tflint-ruleset-aws"
 }
 
@@ -9,9 +9,6 @@ config {
 
   module = true
   disabled_by_default = false
-
-  varfile = ["example1.tfvars", "example2.tfvars"]
-  variables = ["foo=bar", "bar=[\"baz\"]"]
 }
 
 rule "terraform_unused_declarations" {

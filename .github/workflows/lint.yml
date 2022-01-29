@@ -38,7 +38,7 @@ jobs:
       run: tflint --init
 
     - name: Run TFLint
-      run: tflint -f compact
+      run: tflint -f compact --config .tflint.hcl
   tflint-frontend:
     runs-on: ${{ matrix.os }}
 

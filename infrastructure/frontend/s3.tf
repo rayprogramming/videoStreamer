@@ -1,6 +1,26 @@
 resource "aws_kms_key" "mykey" {
   description             = "This key is used to encrypt bucket objects"
   deletion_window_in_days = 10
+  policy = jsonencode(
+    {
+      Id      = "key-default-1"
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action = "kms:*"
+          Effect = "Allow"
+          Principal = {
+            AWS = [
+              "arn:aws:sts::529080338478:assumed-role/video_plan/gh",
+              "arn:aws:iam::529080338478:root",
+            ]
+          }
+          Resource = "*"
+          Sid      = "Enable IAM User Permissions"
+        },
+      ]
+    }
+  )
 }
 
 #tfsec:ignore:aws-s3-enable-bucket-logging
@@ -29,10 +49,13 @@ resource "aws_s3_bucket_public_access_block" "bucket_pab" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_object" "index" {
+resource "aws_s3_bucket_object" "frontend" {
+  for_each = fileset("${path.module}/../../frontend/", "*")
+
   bucket = aws_s3_bucket.bucket.id
-  key    = "index.html"
-  source = "${path.module}/../../frontend/index.html"
+  key    = each.value
+  source = "${path.module}/../../frontend/${each.value}"
+  etag   = filemd5("${path.module}/../../frontend/${each.value}")
 }
 
 data "template_file" "init" {
