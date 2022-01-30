@@ -20,10 +20,11 @@ resource "aws_s3_bucket_public_access_block" "bucket_pab" {
 resource "aws_s3_bucket_object" "frontend" {
   for_each = fileset("${path.module}/../../frontend/", "*")
 
-  bucket = aws_s3_bucket.bucket.id
-  key    = each.value
-  source = "${path.module}/../../frontend/${each.value}"
-  etag   = filemd5("${path.module}/../../frontend/${each.value}")
+  bucket       = aws_s3_bucket.bucket.id
+  key          = each.value
+  source       = "${path.module}/../../frontend/${each.value}"
+  etag         = filemd5("${path.module}/../../frontend/${each.value}")
+  content_type = lookup(local.mime_types, regex("\\.[^.]+$", each.value), null)
 }
 
 data "template_file" "init" {
@@ -33,4 +34,8 @@ data "template_file" "init" {
     domain     = var.domain
     cloudfront = aws_cloudfront_origin_access_identity.oai.id
   }
+}
+
+locals {
+  mime_types = jsondecode(file("${path.module}/data/mime.json"))
 }
