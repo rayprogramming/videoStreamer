@@ -7,4 +7,9 @@ ignore:
         reason: Not worried about logging this bucket at this time.
         expires: 2022-02-22T03:45:03.826Z
         created: 2022-01-23T03:45:03.828Z
+  SNYK-CC-TF-127:
+    - 'infrastructure/frontend/s3.tf > resource > aws_s3_bucket[bucket] > versioning > mfa_delete':
+        reason: None Given
+        expires: 2022-03-01T00:15:25.772Z
+        created: 2022-01-30T00:15:25.777Z
 patch: {}
