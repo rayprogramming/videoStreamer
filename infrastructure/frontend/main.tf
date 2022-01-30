@@ -46,14 +46,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     cached_methods           = ["GET", "HEAD"]
     target_origin_id         = "S3-${var.name}.${var.domain}"
 
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
