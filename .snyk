@@ -10,6 +10,11 @@ ignore:
   SNYK-CC-TF-127:
     - 'infrastructure/frontend/s3.tf > resource > aws_s3_bucket[bucket] > versioning > mfa_delete':
         reason: None Given
-        expires: 2022-03-01T00:15:25.772Z
+        expires: 2023-01-30T00:15:25.777Z
+        created: 2022-01-30T00:15:25.777Z
+  SNYK-CC-TF-4:
+    - 'infrastructure/frontend/s3.tf > input > resource > aws_s3_bucket[bucket]':
+        reason: None Given
+        expires: 2023-01-30T00:15:25.777Z
         created: 2022-01-30T00:15:25.777Z
 patch: {}
