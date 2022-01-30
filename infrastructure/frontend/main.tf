@@ -39,9 +39,12 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   aliases             = ["${var.name}.${var.domain}", "www.${var.name}.${var.domain}"]
 
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-${var.name}.${var.domain}"
+    cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    origin_request_policy_id = "acba4595-bd28-49b8-b9fe-13317c0390fa"
+    compress                 = true
+    allowed_methods          = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = "S3-${var.name}.${var.domain}"
 
     forwarded_values {
       query_string = false
@@ -50,6 +53,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
         forward = "none"
       }
     }
+
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
