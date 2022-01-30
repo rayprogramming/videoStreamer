@@ -1,4 +1,4 @@
-#tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-enable-bucket-encryption:exp:2023-01-01T00:00:00
+#tfsec:ignore:aws-s3-enable-bucket-encryption tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "bucket" {
   bucket = "${var.name}.${var.domain}"
   policy = data.template_file.init.rendered
