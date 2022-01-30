@@ -1,42 +1,9 @@
-resource "aws_kms_key" "mykey" {
-  description             = "This key is used to encrypt bucket objects"
-  deletion_window_in_days = 10
-  enable_key_rotation     = true
-  policy = jsonencode(
-    {
-      Id      = "key-default-1"
-      Version = "2012-10-17"
-      Statement = [
-        {
-          Action = "kms:*"
-          Effect = "Allow"
-          Principal = {
-            AWS = [
-              "arn:aws:sts::529080338478:assumed-role/video_plan/gh",
-              "arn:aws:iam::529080338478:root",
-            ]
-          }
-          Resource = "*"
-          Sid      = "Enable IAM User Permissions"
-        },
-      ]
-    }
-  )
-}
-
-#tfsec:ignore:aws-s3-enable-bucket-logging
+#tfsec:ignore:aws-s3-enable-bucket-encryption tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "bucket" {
   bucket = "${var.name}.${var.domain}"
   policy = data.template_file.init.rendered
   acl    = "private"
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        kms_master_key_id = aws_kms_key.mykey.arn
-        sse_algorithm     = "aws:kms"
-      }
-    }
-  }
+
   versioning {
     enabled = true
   }
