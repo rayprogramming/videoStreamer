@@ -65,7 +65,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   logging_config {
     include_cookies = true
-    bucket          = "mylogs.s3.amazonaws.com"
+    bucket          = "rayprogramming-logs"
     prefix          = "video.rayprogramming.com/cdn"
   }
 
