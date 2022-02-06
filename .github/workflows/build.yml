@@ -43,8 +43,13 @@ jobs:
       - name: Build
         run: npm run prod
 
-      - name: Test
-        run: npm test
+      - name: Build
+        run: npm run lint
+
+      - name: Unit Test
+        run: npm test:unit
+      - name: e2e Test
+        run: npm test:e2e
 
       - name: Terraform fmt
         id: fmt

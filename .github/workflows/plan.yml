@@ -22,6 +22,25 @@ jobs:
           role-session-name: gh
       - uses: hashicorp/setup-terraform@v1
 
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run prod
+
+      - name: Build
+        run: npm run lint
+
+      - name: Unit Test
+        run: npm test:unit
+      - name: e2e Test
+        run: npm test:e2e
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: false
+
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
