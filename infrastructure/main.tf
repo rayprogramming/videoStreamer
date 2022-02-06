@@ -30,5 +30,4 @@ module "frontend" {
   name   = "video"
   domain = data.aws_route53_zone.selected.name
   zoneid = data.aws_route53_zone.selected.zone_id
-
 }
