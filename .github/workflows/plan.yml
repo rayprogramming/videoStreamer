@@ -24,17 +24,22 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+        working-directory: frontend
 
       - name: Build
         run: npm run prod
+        working-directory: frontend
 
       - name: Build
         run: npm run lint
+        working-directory: frontend
 
       - name: Unit Test
         run: npm test:unit
+        working-directory: frontend
       - name: e2e Test
         run: npm test:e2e
+        working-directory: frontend
 
       - name: Terraform fmt
         id: fmt
