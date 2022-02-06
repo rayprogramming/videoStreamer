@@ -35,10 +35,10 @@ jobs:
         working-directory: frontend
 
       - name: Unit Test
-        run: npm test:unit
+        run: npm run test:unit
         working-directory: frontend
       - name: e2e Test
-        run: npm test:e2e
+        run: npm run test:e2e
         working-directory: frontend
 
       - name: Terraform fmt
