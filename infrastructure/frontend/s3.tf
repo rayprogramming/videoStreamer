@@ -22,8 +22,8 @@ resource "aws_s3_bucket_object" "frontend" {
 
   bucket       = aws_s3_bucket.bucket.id
   key          = each.value
-  source       = "${path.module}/../../frontend/${each.value}"
-  etag         = filemd5("${path.module}/../../frontend/${each.value}")
+  source       = "${path.module}/../../frontend/dist/${each.value}"
+  etag         = filemd5("${path.module}/../../frontend/dist/${each.value}")
   content_type = lookup(local.mime_types, regex("\\.[^.]+$", each.value), null)
 }
 
