@@ -6,8 +6,8 @@
     "serve": "NODE_OPTIONS='--openssl-legacy-provider' vue-cli-service serve",
     "build": "NODE_OPTIONS='--openssl-legacy-provider' vue-cli-service build",
     "prod": "NPM_ENV='production' vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "NODE_OPTIONS='--openssl-legacy-provider' vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e --headless",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
