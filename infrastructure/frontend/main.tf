@@ -34,7 +34,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   enabled             = true
   is_ipv6_enabled     = true
-  default_root_object = "index.html"
+  default_root_object = "public/index.html"
   price_class         = "PriceClass_100"
   aliases             = ["${var.name}.${var.domain}", "www.${var.name}.${var.domain}"]
 
