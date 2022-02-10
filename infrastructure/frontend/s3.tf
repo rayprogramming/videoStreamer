@@ -1,4 +1,4 @@
-#tfsec:ignore:aws-s3-enable-bucket-encryption tfsec:ignore:aws-s3-enable-bucket-logging
+#tfsec:ignore:aws-s3-enable-bucket-encryption tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket" "bucket" {
   bucket = "${var.name}.${var.domain}"
   policy = data.template_file.init.rendered
@@ -18,12 +18,12 @@ resource "aws_s3_bucket_public_access_block" "bucket_pab" {
 }
 
 resource "aws_s3_bucket_object" "frontend" {
-  for_each = fileset("${path.module}/../../frontend/", "*")
+  for_each = fileset("${path.module}/../../frontend/dist/", "*")
 
   bucket       = aws_s3_bucket.bucket.id
   key          = each.value
-  source       = "${path.module}/../../frontend/${each.value}"
-  etag         = filemd5("${path.module}/../../frontend/${each.value}")
+  source       = "${path.module}/../../frontend/dist/${each.value}"
+  etag         = filemd5("${path.module}/../../frontend/dist/${each.value}")
   content_type = lookup(local.mime_types, regex("\\.[^.]+$", each.value), null)
 }
 
