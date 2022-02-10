@@ -35,7 +35,7 @@ jobs:
         working-directory: frontend
 
       - name: Unit Test
-        run: npm run test:unit
+        run: npm run test:unit:ci
         working-directory: frontend
       - name: e2e Test
         run: npm run test:e2e
