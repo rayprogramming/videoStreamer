@@ -10,7 +10,11 @@
 # For more examples, including how to limit scans to only high-severity issues
 # and fail PR checks, see https://github.com/snyk/actions/
 
-name: Security Scans
+name: Snyk Scans
+permissions:
+      id-token: write
+      contents: read    # This is required for actions/checkout@v2
+      pull-requests: write
 
 on:
   push:
