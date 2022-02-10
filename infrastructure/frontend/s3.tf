@@ -18,7 +18,7 @@ resource "aws_s3_bucket_public_access_block" "bucket_pab" {
 }
 
 resource "aws_s3_bucket_object" "frontend" {
-  for_each = fileset("${path.module}/../../frontend/", "*")
+  for_each = fileset("${path.module}/../../frontend/", "**")
 
   bucket       = aws_s3_bucket.bucket.id
   key          = each.value
