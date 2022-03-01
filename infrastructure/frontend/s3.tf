@@ -28,15 +28,15 @@ resource "aws_s3_bucket_public_access_block" "bucket_pab" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_object" "frontend" {
-  for_each = fileset("${path.module}/../../frontend/", "**")
-
-  bucket       = aws_s3_bucket.bucket.id
-  key          = each.value
-  source       = "${path.module}/../../frontend/${each.value}"
-  etag         = filemd5("${path.module}/../../frontend/${each.value}")
-  content_type = lookup(local.mime_types, regex("\\.[^.]+$", "${path.module}/../../frontend/${each.value}"), null)
-}
+# resource "aws_s3_object" "frontend" {
+#   for_each = fileset("${path.module}/../../frontend/", "**")
+#
+#   bucket       = aws_s3_bucket.bucket.id
+#   key          = each.value
+#   source       = "${path.module}/../../frontend/${each.value}"
+#   etag         = filemd5("${path.module}/../../frontend/${each.value}")
+#   content_type = lookup(local.mime_types, regex("\\.[^.]+$", "${path.module}/../../frontend/${each.value}"), null)
+# }
 
 data "template_file" "init" {
   template = file("${path.module}/policy.tpl")

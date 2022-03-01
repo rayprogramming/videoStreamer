@@ -80,3 +80,9 @@ jobs:
         id: apply
         run: terraform apply -auto-approve
         continue-on-error: false
+      - name: rclone
+        uses: wei/rclone@v1
+        env:
+          RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+        with:
+          args: copy ./frontend aws:rayprogramming.com
