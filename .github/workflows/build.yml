@@ -84,7 +84,7 @@ jobs:
         id: sync
         working-directory: frontend
         run: |
-          aws s3 sync . s3://rayprogramming.com
+          aws s3 sync . s3://video.rayprogramming.com
       # - name: rclone
       #   uses: wei/rclone@v1
       #   env:
