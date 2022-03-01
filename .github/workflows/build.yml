@@ -82,7 +82,7 @@ jobs:
         continue-on-error: false
       - name: sync
         id: sync
-        working_directory: frontend
+        working-directory: frontend
         run: |
           aws s3 sync . s3://rayprogramming.com
       # - name: rclone
