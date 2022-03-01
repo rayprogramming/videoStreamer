@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 4.0"
     }
   }
   backend "s3" {
@@ -30,4 +30,10 @@ module "frontend" {
   name   = "video"
   domain = data.aws_route53_zone.selected.name
   zoneid = data.aws_route53_zone.selected.zone_id
+}
+
+module "backend_dev" {
+  source  = "./backend"
+  project = "videoStreamer"
+  env     = "dev"
 }
