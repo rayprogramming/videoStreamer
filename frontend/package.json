@@ -12,7 +12,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
+    "core-js": "~3",
     "register-service-worker": "^1.7.1",
     "video.js": "^7.17.0",
     "vue": "^3.2.31",
@@ -31,7 +31,7 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-prettier": "~7.0.0",
     "@vue/test-utils": "^2.0.0-0",
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7",
     "chai": "^4.1.2",
     "eslint": "~8.10.0",
     "eslint-plugin-prettier": "~4.0.0",
