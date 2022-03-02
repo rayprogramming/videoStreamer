@@ -1,14 +1,25 @@
 #tfsec:ignore:aws-s3-enable-bucket-encryption tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket" "bucket" {
   bucket = "${var.name}.${var.domain}"
-  policy = data.template_file.init.rendered
-  acl    = "private"
+}
 
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_versioning" "bucket_version" {
+  bucket = aws_s3_bucket.bucket.id
+
+  versioning_configuration {
+    status = "Enabled"
   }
 }
 
+resource "aws_s3_bucket_acl" "bucket_acl" {
+  bucket = aws_s3_bucket.bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  bucket = aws_s3_bucket.bucket.id
+  policy = data.template_file.init.rendered
+}
 resource "aws_s3_bucket_public_access_block" "bucket_pab" {
   bucket                  = aws_s3_bucket.bucket.id
   block_public_acls       = true
@@ -17,15 +28,15 @@ resource "aws_s3_bucket_public_access_block" "bucket_pab" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_object" "frontend" {
-  for_each = fileset("${path.module}/../../frontend/dist/", "*")
-
-  bucket       = aws_s3_bucket.bucket.id
-  key          = each.value
-  source       = "${path.module}/../../frontend/dist/${each.value}"
-  etag         = filemd5("${path.module}/../../frontend/dist/${each.value}")
-  content_type = lookup(local.mime_types, regex("\\.[^.]+$", each.value), null)
-}
+# resource "aws_s3_object" "frontend" {
+#   for_each = fileset("${path.module}/../../frontend/", "**")
+#
+#   bucket       = aws_s3_bucket.bucket.id
+#   key          = each.value
+#   source       = "${path.module}/../../frontend/${each.value}"
+#   etag         = filemd5("${path.module}/../../frontend/${each.value}")
+#   content_type = lookup(local.mime_types, regex("\\.[^.]+$", "${path.module}/../../frontend/${each.value}"), null)
+# }
 
 data "template_file" "init" {
   template = file("${path.module}/policy.tpl")

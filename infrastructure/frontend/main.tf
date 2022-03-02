@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 2.7.0"
+      version = "~> 4.0"
     }
   }
 }
@@ -34,7 +34,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   enabled             = true
   is_ipv6_enabled     = true
-  default_root_object = "index.html"
+  default_root_object = "public/index.html"
   price_class         = "PriceClass_100"
   aliases             = ["${var.name}.${var.domain}", "www.${var.name}.${var.domain}"]
 
@@ -49,8 +49,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
+    default_ttl            = 0
+    max_ttl                = 0
   }
 
   restrictions {
@@ -63,6 +63,12 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     include_cookies = true
     bucket          = "rayprogramming-logs.s3.amazonaws.com"
     prefix          = "video.rayprogramming.com/cdn"
+  }
+
+  custom_error_response {
+    error_code         = 403
+    response_code      = 200
+    response_page_path = "/index.html"
   }
 
   tags = {

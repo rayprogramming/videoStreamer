@@ -80,3 +80,14 @@ jobs:
         id: apply
         run: terraform apply -auto-approve
         continue-on-error: false
+      - name: sync
+        id: sync
+        working-directory: frontend/dist
+        run: |
+          aws s3 sync . s3://video.rayprogramming.com
+      # - name: rclone
+      #   uses: wei/rclone@v1
+      #   env:
+      #     RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+      #   with:
+      #     args: copy ./frontend aws:rayprogramming.com
