@@ -36,11 +36,10 @@ jobs:
         run: npm ci
         working-directory: frontend
 
-      - name: Configure amplify
-        uses: ambientlight/amplify-cli-action@0.3.0
-        with:
-          amplify_command: configure
-          amplify_env: dev
+      - name: Install Amplify CLI and Init
+        run: |
+          npm install -g @aws-amplify/cli --unsafe-perm=true
+          amplify init --yes --amplify '{"envName":"dev"}'
 
       - name: Build
         run: npm run prod
@@ -66,10 +65,6 @@ jobs:
           role-to-assume: ${{ secrets.TERRAFORM_AWS_PLAN_ROLE }}
           role-session-name: gh
       - uses: hashicorp/setup-terraform@v1
-      - name: Install Amplify CLI and Init
-        run: |
-          npm install -g @aws-amplify/cli --unsafe-perm=true
-          amplify init --yes --amplify '{"envName":"dev"}'
       - name: Terraform Init
         id: init
         run: terraform init
