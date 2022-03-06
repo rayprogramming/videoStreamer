@@ -35,9 +35,11 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Install Amplify CLI and Init
+      - name: Install Amplify CLI
         run: |
           npm install -g @aws-amplify/cli --unsafe-perm=true
+      - name: amplify Init
+        run: |
           amplify init --yes --amplify '{"envName":"dev"}'
 
       - name: Build
