@@ -11,8 +11,11 @@ on:
       - main  # Set a branch to deploy
 
 jobs:
-  setup:
+  infrastructure_build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./infrastructure
     steps:
       - uses: actions/checkout@v2
       - name: Configure AWS Credentials
@@ -21,13 +24,6 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.TERRAFORM_AWS_DEPLOY_ROLE }}
           role-session-name: gh
-  infrastructure_build:
-    needs: setup
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./infrastructure
-    steps:
       - uses: hashicorp/setup-terraform@v1
       - name: Cache node modules
         uses: actions/cache@v2

@@ -7,8 +7,11 @@ on:
   pull_request:
 
 jobs:
-  setup:
+  frontend_plan:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - uses: actions/checkout@v2
       - name: Configure AWS Credentials
@@ -17,13 +20,6 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.TERRAFORM_AWS_PLAN_ROLE }}
           role-session-name: gh
-  frontend_plan:
-    needs: setup
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
-    steps:
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -57,12 +53,18 @@ jobs:
         run: npm run test:e2e
         working-directory: frontend
   infrastructure_plan:
-    needs: setup
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: infrastructure
+        working-directory: ./infrastructure
     steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.TERRAFORM_AWS_PLAN_ROLE }}
+          role-session-name: gh
       - uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
