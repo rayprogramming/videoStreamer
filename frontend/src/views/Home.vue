@@ -1,8 +1,9 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <amplify-authenticator username-alias="email">
+     <img alt="Vue logo" src="../assets/logo.png">
+     <HelloWorld msg="You Successfully Authenticated a User!  Go You!"/>
+     <amplify-sign-out></amplify-sign-out>
+ </amplify-authenticator>
 </template>
 
 <script>

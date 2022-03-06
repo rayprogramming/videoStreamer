@@ -1,19 +1,15 @@
 <template>
-  <div class="login">
-    <form action="/login" method="post">
-      <input type="email" name="email" id="email" value="" />
-      <input type="password" name="password" id="password" value="" />
-    </form>
-  </div>
+  <amplify-authenticator username-alias="email">
+     <img alt="Vue logo" src="./assets/logo.png">
+     <HelloWorld msg="You Successfully Authenticated a User!  Go You!"/>
+     <amplify-sign-out></amplify-sign-out>
+ </amplify-authenticator>
 </template>
 
 <script>
 export default {
   name: "LoginForm",
-  props: {
-    email: String,
-    password: String
-  },
+  props: {},
 };
 </script>
 

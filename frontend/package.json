@@ -4,14 +4,16 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "NODE_OPTIONS='--openssl-legacy-provider' vue-cli-service build",
+    "build": "vue-cli-service build",
     "prod": "NPM_ENV='production' vue-cli-service build",
-    "test:unit": "NODE_OPTIONS='--openssl-legacy-provider' vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit",
     "test:unit:ci": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e --headless",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@aws-amplify/ui-components": "^1.9.6",
+    "aws-amplify": "^4.3.15",
     "core-js": "^3.6.5",
     "register-service-worker": "^1.7.1",
     "video.js": "^7.17.0",
