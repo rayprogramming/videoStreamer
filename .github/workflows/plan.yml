@@ -44,7 +44,7 @@ jobs:
         uses: ambientlight/amplify-cli-action@0.3.0
         with:
           amplify_command: configure
-          amplify_env: prod
+          amplify_env: dev
 
       - name: Build
         run: npm run prod
