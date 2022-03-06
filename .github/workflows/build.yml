@@ -51,12 +51,10 @@ jobs:
       - name: Install Dependencies
         run: npm ci
         working-directory: frontend
-      - name: Configure amplify
-        uses: ambientlight/amplify-cli-action@0.3.0
-        working-directory: frontend
-        with:
-          amplify_command: configure
-          amplify_env: dev
+      - name: Install Amplify CLI and Init
+        run: |
+          npm install -g @aws-amplify/cli --unsafe-perm=true
+          amplify init --yes --amplify '{"envName":"dev"}'
 
       - name: Build
         run: npm run prod
