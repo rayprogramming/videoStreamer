@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./frontend
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v2
       - name: Configure AWS Credentials
@@ -34,24 +34,19 @@ jobs:
             ${{ runner.os }}-
       - name: Install Dependencies
         run: npm ci
-        working-directory: frontend
 
       - name: Install Amplify CLI and Init
         run: |
           npm install -g @aws-amplify/cli --unsafe-perm=true
           amplify init --yes --amplify '{"envName":"dev"}'
-        working-directory: frontend
 
       - name: Build
         run: npm run prod
-        working-directory: frontend
 
       - name: Unit Test
         run: npm run test:unit:ci
-        working-directory: frontend
       - name: e2e Test
         run: npm run test:e2e
-        working-directory: frontend
   infrastructure_plan:
     runs-on: ubuntu-latest
     defaults:
