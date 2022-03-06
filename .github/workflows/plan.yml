@@ -66,7 +66,10 @@ jobs:
           role-to-assume: ${{ secrets.TERRAFORM_AWS_PLAN_ROLE }}
           role-session-name: gh
       - uses: hashicorp/setup-terraform@v1
-
+      - name: Install Amplify CLI and Init
+        run: |
+          npm install -g @aws-amplify/cli --unsafe-perm=true
+          amplify init --yes --amplify '{"envName":"dev"}'
       - name: Terraform Init
         id: init
         run: terraform init
