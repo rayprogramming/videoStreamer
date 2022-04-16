@@ -43,6 +43,7 @@ jobs:
           ls -lah ./
           amplify init --yes --amplify '{"envName":"dev"}'
           ls -lah ./src
+          amplify env pull
 
       - name: Build
         run: npm run prod
