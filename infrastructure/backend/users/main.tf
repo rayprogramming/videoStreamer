@@ -18,8 +18,6 @@ provider "aws" {
   alias  = "east-1"
 }
 
-module "users" {
-  source  = "./users/"
-  project = var.project
-  env     = var.env
+locals {
+  module_name = "users"
 }

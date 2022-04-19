@@ -18,14 +18,14 @@ provider "aws" {
 }
 
 resource "aws_cloudfront_origin_access_identity" "oai" {
-  comment = "access-identity-${var.name}.${var.domain}.s3.us-east-2.amazonaws.com"
+  comment = "access-identity-${var.domain}.s3.us-east-2.amazonaws.com"
 }
 
 #tfsec:ignore:aws-cloudfront-enable-logging
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = "${var.name}.${var.domain}.s3.us-east-2.amazonaws.com"
-    origin_id   = "S3-${var.name}.${var.domain}"
+    domain_name = "${var.domain}.s3.us-east-2.amazonaws.com"
+    origin_id   = "S3-${var.domain}"
 
     s3_origin_config {
       origin_access_identity = "origin-access-identity/cloudfront/${aws_cloudfront_origin_access_identity.oai.id}"
@@ -36,7 +36,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   is_ipv6_enabled     = true
   default_root_object = "public/index.html"
   price_class         = "PriceClass_100"
-  aliases             = ["${var.name}.${var.domain}", "www.${var.name}.${var.domain}"]
+  aliases             = ["${var.domain}", "www.${var.domain}"]
 
   default_cache_behavior {
     cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6"
@@ -44,7 +44,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     compress                 = true
     allowed_methods          = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods           = ["GET", "HEAD"]
-    target_origin_id         = "S3-${var.name}.${var.domain}"
+    target_origin_id         = "S3-${var.domain}"
 
 
     viewer_protocol_policy = "redirect-to-https"
@@ -72,7 +72,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   tags = {
-    Environment = "${var.name}.${var.domain}"
+    Environment = "${var.domain}"
   }
   depends_on = [aws_acm_certificate_validation.ssl]
   viewer_certificate {

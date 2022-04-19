@@ -1,9 +1,8 @@
 resource "aws_route53_record" "subdomain_www" {
   provider = aws.east-1
   zone_id  = var.zoneid
-  name     = "www.${var.name}"
+  name     = "www.${var.domain}"
   type     = "A"
-  count    = var.subdomain
 
   alias {
     name                   = aws_cloudfront_distribution.s3_distribution.domain_name
@@ -15,7 +14,7 @@ resource "aws_route53_record" "subdomain_www" {
 resource "aws_route53_record" "subdomain_root" {
   provider = aws.east-1
   zone_id  = var.zoneid
-  name     = var.name
+  name     = var.domain
   type     = "A"
 
   alias {
@@ -27,15 +26,15 @@ resource "aws_route53_record" "subdomain_root" {
 
 resource "aws_acm_certificate" "ssl" {
   provider                  = aws.east-1
-  domain_name               = "${var.name}.${var.domain}"
-  subject_alternative_names = ["www.${var.name}.${var.domain}"]
+  domain_name               = var.domain
+  subject_alternative_names = ["www.${var.domain}"]
   validation_method         = "DNS"
 
   tags = {
     site = var.domain
   }
 }
-resource "aws_route53_record" "example" {
+resource "aws_route53_record" "ssl_verification" {
   provider = aws.east-1
   for_each = {
     for dvo in aws_acm_certificate.ssl.domain_validation_options : dvo.domain_name => {
@@ -48,7 +47,7 @@ resource "aws_route53_record" "example" {
   allow_overwrite = true
   name            = each.value.name
   records         = [each.value.record]
-  ttl             = 60
+  ttl             = 300
   type            = each.value.type
   zone_id         = var.zoneid
 }
