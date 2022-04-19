@@ -61,7 +61,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: users_functions
-          path: dist/
+          path: infrastructure/backend/users/functions/dist/
   infrastructure_plan:
     runs-on: ubuntu-latest
     needs: [frontend_plan, users_plan]
