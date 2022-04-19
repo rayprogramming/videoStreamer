@@ -1,4 +1,5 @@
 <template>
+  <HelloWorld></HelloWorld>
 </template>
 
 <script>
