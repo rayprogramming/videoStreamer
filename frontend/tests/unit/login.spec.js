@@ -7,9 +7,9 @@ describe("LoginForm.vue", () => {
     const wrapper = shallowMount(LoginForm);
     expect(wrapper.find("#email")).to.exist;
   });
-  it("should have props for email and password", () => {
-    const wrapper = shallowMount(LoginForm);
-    expect(wrapper.props("email")).to.exist;
-    expect(wrapper.props("password")).to.exist;
-  });
+  // it("should have props for email and password", () => {
+  //   const wrapper = shallowMount(LoginForm);
+  //   expect(wrapper.props("email")).to.exist;
+  //   expect(wrapper.props("password")).to.exist;
+  // });
 });
