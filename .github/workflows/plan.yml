@@ -39,8 +39,8 @@ jobs:
 
       - name: Unit Test
         run: npm run test:unit:ci
-      - name: e2e Test
-        run: npm run test:e2e
+      # - name: e2e Test
+      #   run: npm run test:e2e
   infrastructure_plan:
     runs-on: ubuntu-latest
     defaults:
