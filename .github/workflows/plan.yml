@@ -14,12 +14,6 @@ jobs:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v2
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: ${{ secrets.AWS_REGION }}
-          role-to-assume: ${{ secrets.TERRAFORM_AWS_PLAN_ROLE }}
-          role-session-name: gh
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -39,8 +33,31 @@ jobs:
 
       - name: Unit Test
         run: npm run test:unit:ci
-      # - name: e2e Test
-      #   run: npm run test:e2e
+  users_plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infrastructure/backend/users/functions
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install Dependencies
+        run: npm ci
+      - name: Unit Test
+        run: npm run test
+      - name: Build
+        run: npm build
   infrastructure_plan:
     runs-on: ubuntu-latest
     defaults:
