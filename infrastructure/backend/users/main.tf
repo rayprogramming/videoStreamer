@@ -21,3 +21,7 @@ provider "aws" {
 locals {
   module_name = "users"
 }
+
+data "aws_route53_zone" "selected" {
+  zone_id = var.zoneid
+}

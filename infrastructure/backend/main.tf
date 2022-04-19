@@ -22,4 +22,5 @@ module "users" {
   source  = "./users/"
   project = var.project
   env     = var.env
+  zoneid  = var.zoneid
 }

@@ -37,5 +37,5 @@ module "backend_dev" {
   source  = "./backend"
   project = "videoStreamer"
   env     = "dev"
-  fqdn    = module.frontend.fqdn
+  zoneid  = data.aws_route53_zone.selected.zone_id
 }
