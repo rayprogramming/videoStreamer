@@ -37,17 +37,6 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-terraform
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ./.terraform
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/terraform.lock.hcl') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
       - name: Install Dependencies
         run: npm ci
         working-directory: frontend
