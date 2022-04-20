@@ -11,6 +11,35 @@ on:
       - main  # Set a branch to deploy
 
 jobs:
+  frontend_plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install Dependencies
+        run: npm ci
+      - name: Unit Test
+        run: npm run test:unit:ci
+      - name: Build
+        run: npm run prod
+      - uses: actions/upload-artifact@v2
+        with:
+          name: frontend
+          path: frontend/dist
   users_plan:
     runs-on: ubuntu-latest
     defaults:
@@ -41,7 +70,7 @@ jobs:
           name: users_functions
           path: infrastructure/backend/users/functions/dist/
   infrastructure_build:
-    needs: [users_plan]
+    needs: [users_plan, frontend_plan]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -55,42 +84,6 @@ jobs:
           role-to-assume: ${{ secrets.TERRAFORM_AWS_DEPLOY_ROLE }}
           role-session-name: gh
       - uses: hashicorp/setup-terraform@v1
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install Dependencies
-        run: npm ci
-        working-directory: frontend
-      - name: Install Amplify CLI and Init
-        run: |
-          npm install -g @aws-amplify/cli --unsafe-perm=true
-          amplify init --yes --amplify '{"envName":"dev"}'
-        working-directory: frontend
-
-      - name: Build
-        run: npm run prod
-        working-directory: frontend
-
-      - name: Build
-        run: npm run lint
-        working-directory: frontend
-
-      - name: Unit Test
-        run: npm run test:unit:ci
-        working-directory: frontend
-      # - name: e2e Test
-      #   run: npm run test:e2e
-      #   working-directory: frontend
-
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
@@ -118,6 +111,10 @@ jobs:
         id: apply
         run: terraform apply -auto-approve
         continue-on-error: false
+      - uses: actions/download-artifact@v2
+        with:
+          name: frontend
+          path: frontend/dist
       - name: sync
         id: sync
         working-directory: frontend/dist
