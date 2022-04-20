@@ -12,7 +12,6 @@ resource "aws_route53_record" "api_subdomain" {
 }
 
 resource "aws_route53_record" "auth_ssl_verification" {
-  provider = aws.east-1
   for_each = {
     for dvo in aws_acm_certificate.ssl.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name

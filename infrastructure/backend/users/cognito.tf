@@ -75,21 +75,21 @@ resource "aws_cognito_user_pool_client" "client" {
 }
 
 resource "aws_ssm_parameter" "users_client_id" {
-  name        = "/${var.project}/${var.env}/users/client_id"
+  name        = "/${var.project}/${var.env}/${local.module_name}/client_id"
   description = "Cognito Client Id for managing users"
   type        = "String"
   value       = aws_cognito_user_pool_client.client.id
 }
 
 resource "aws_ssm_parameter" "users_pool_id" {
-  name        = "/${var.project}/${var.env}/users/pool_id"
+  name        = "/${var.project}/${var.env}/${local.module_name}/pool_id"
   description = "Cognito Pool Id for managing users"
   type        = "String"
   value       = aws_cognito_user_pool.user_pool.id
 }
 
 resource "aws_ssm_parameter" "users_client_secret" {
-  name        = "/${var.project}/${var.env}/users/client_secret"
+  name        = "/${var.project}/${var.env}/${local.module_name}/client_secret"
   description = "Cognito Client Secret for managing users"
   type        = "SecureString"
   value       = aws_cognito_user_pool_client.client.client_secret
