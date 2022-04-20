@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "register" {
   filename         = data.archive_file.register.output_path
   function_name    = "${local.module_name}_register"
-  role             = data.terraform_remote_state.iam.outputs.video_users_lambda
+  role             = data.terraform_remote_state.iam.outputs.video_users_lambda.arn
   handler          = "register.handler"
   source_code_hash = data.archive_file.register.output_base64sha256
   runtime          = "nodejs14.x"
@@ -24,7 +24,7 @@ data "archive_file" "register" {
 resource "aws_lambda_function" "confirm_register" {
   filename         = data.archive_file.confirm_register.output_path
   function_name    = "${local.module_name}_confirm_register"
-  role             = data.terraform_remote_state.iam.outputs.video_users_lambda
+  role             = data.terraform_remote_state.iam.outputs.video_users_lambda.arn
   handler          = "confirm_register.handler"
   source_code_hash = data.archive_file.confirm_register.output_base64sha256
   runtime          = "nodejs14.x"
