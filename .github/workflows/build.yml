@@ -37,8 +37,24 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-terraform
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ./.terraform
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/terraform.lock.hcl') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: Install Dependencies
         run: npm ci
+        working-directory: frontend
+      - name: Install Amplify CLI and Init
+        run: |
+          npm install -g @aws-amplify/cli --unsafe-perm=true
+          amplify init --yes --amplify '{"envName":"dev"}'
         working-directory: frontend
 
       - name: Build
@@ -85,9 +101,3 @@ jobs:
         working-directory: frontend/dist
         run: |
           aws s3 sync . s3://video.rayprogramming.com
-      # - name: rclone
-      #   uses: wei/rclone@v1
-      #   env:
-      #     RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
-      #   with:
-      #     args: copy ./frontend aws:rayprogramming.com

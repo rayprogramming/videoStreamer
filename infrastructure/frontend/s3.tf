@@ -1,6 +1,6 @@
 #tfsec:ignore:aws-s3-enable-bucket-encryption tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket" "bucket" {
-  bucket = "${var.name}.${var.domain}"
+  bucket = var.domain
 }
 
 resource "aws_s3_bucket_versioning" "bucket_version" {
@@ -41,7 +41,6 @@ resource "aws_s3_bucket_public_access_block" "bucket_pab" {
 data "template_file" "init" {
   template = file("${path.module}/policy.tpl")
   vars = {
-    name       = var.name
     domain     = var.domain
     cloudfront = aws_cloudfront_origin_access_identity.oai.id
   }

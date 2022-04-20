@@ -28,5 +28,4 @@ export default {
   },
 };
 </script>
-<style src="video.js/dist/video-js.css">
-</style>
+<style src="video.js/dist/video-js.css"></style>

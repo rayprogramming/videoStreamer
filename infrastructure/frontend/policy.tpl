@@ -9,7 +9,7 @@
                 "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${cloudfront}"
             },
             "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::${name}.${domain}/*"
+            "Resource": "arn:aws:s3:::${domain}/*"
         }
     ]
 }

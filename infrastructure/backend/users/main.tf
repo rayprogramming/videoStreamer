@@ -18,9 +18,10 @@ provider "aws" {
   alias  = "east-1"
 }
 
-module "users" {
-  source  = "./users/"
-  project = var.project
-  env     = var.env
-  zoneid  = var.zoneid
+locals {
+  module_name = "users"
+}
+
+data "aws_route53_zone" "selected" {
+  zone_id = var.zoneid
 }

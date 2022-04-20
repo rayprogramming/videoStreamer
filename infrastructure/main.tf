@@ -1,4 +1,5 @@
 terraform {
+  required_version = "~> 1.1.8"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -22,7 +23,7 @@ provider "aws" {
 }
 
 data "aws_route53_zone" "selected" {
-  name = "rayprogramming.com"
+  name = var.root_domain
 }
 
 module "frontend" {
@@ -36,4 +37,5 @@ module "backend_dev" {
   source  = "./backend"
   project = "videoStreamer"
   env     = "dev"
+  zoneid  = data.aws_route53_zone.selected.zone_id
 }
