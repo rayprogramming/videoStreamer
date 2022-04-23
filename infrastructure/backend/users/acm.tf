@@ -9,7 +9,6 @@ resource "aws_acm_certificate" "ssl" {
 }
 
 resource "aws_acm_certificate" "user_ssl" {
-  provider          = aws.east-1
   domain_name       = "${local.module_name}.${data.aws_route53_zone.selected.name}"
   validation_method = "DNS"
 
