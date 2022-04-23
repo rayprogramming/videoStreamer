@@ -3,13 +3,6 @@ resource "aws_cognito_user_pool" "user_pool" {
   admin_create_user_config {
     allow_admin_create_user_only = true
   }
-
-}
-
-resource "aws_cognito_user_pool_domain" "users" {
-  domain          = "auth.${data.aws_route53_zone.selected.name}"
-  certificate_arn = aws_acm_certificate.ssl.arn
-  user_pool_id    = aws_cognito_user_pool.user_pool.id
 }
 
 resource "aws_cognito_user_pool_client" "client" {
