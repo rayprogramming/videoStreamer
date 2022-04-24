@@ -41,7 +41,7 @@ jobs:
           name: frontend
           path: frontend/dist
   infrastructure_build:
-    needs: [users_plan, frontend_plan]
+    needs: [frontend_plan]
     runs-on: ubuntu-latest
     defaults:
       run:
