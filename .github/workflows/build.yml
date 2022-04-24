@@ -40,35 +40,6 @@ jobs:
         with:
           name: frontend
           path: frontend/dist
-  users_plan:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: infrastructure/backend/users/functions
-    steps:
-      - uses: actions/checkout@v2
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install Dependencies
-        run: npm ci
-      # - name: Test
-      #   run: npm run test
-      - name: Build
-        run: npm run build
-      - uses: actions/upload-artifact@v2
-        with:
-          name: users_functions
-          path: infrastructure/backend/users/functions/dist/
   infrastructure_build:
     needs: [users_plan, frontend_plan]
     runs-on: ubuntu-latest
@@ -97,7 +68,7 @@ jobs:
         run: ls -lah backend/users/functions/dist
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: terraform init -upgrade
         continue-on-error: false
 
       - name: Terraform Validate

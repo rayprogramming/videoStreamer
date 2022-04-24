@@ -17,6 +17,7 @@ provider "aws" {
   region = "us-east-1"
   alias  = "east-1"
 }
+
 module "users" {
   source  = "rayprogramming/rayprogramming-cognito-auth/aws"
   version = "1.0.1"
