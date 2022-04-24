@@ -59,13 +59,7 @@ jobs:
         id: fmt
         run: terraform fmt -check
         continue-on-error: false
-      - uses: actions/download-artifact@v2
-        with:
-          name: users_functions
-          path: infrastructure/backend/users/functions/dist/
-      - name: directory
-        id: dir
-        run: ls -lah backend/users/functions/dist
+        
       - name: Terraform Init
         id: init
         run: terraform init -upgrade
