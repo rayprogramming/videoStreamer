@@ -19,8 +19,9 @@ provider "aws" {
 }
 
 module "users" {
-  source  = "./users/"
+  source  = "rayprogramming/rayprogramming-cognito-auth/aws"
+  version = "1.0.1"
   project = var.project
   env     = var.env
-  zoneid  = var.zoneid
+  zone_id = var.zoneid
 }
