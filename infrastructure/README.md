@@ -17,7 +17,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_frontend"></a> [frontend](#module\_frontend) | rayprogramming/videoStreamer-cloudfront/aws | ~>2.0 |
-| <a name="module_users"></a> [users](#module\_users) | rayprogramming/rayprogramming-cognito-auth/aws | ~>1.0 |
+| <a name="module_users"></a> [users](#module\_users) | rayprogramming/cognito-auth/aws | ~>1.0 |
 
 ## Resources
 
