@@ -34,7 +34,7 @@ module "frontend" {
 }
 
 module "users" {
-  source  = "rayprogramming/rayprogramming-cognito-auth/aws"
+  source  = "rayprogramming/cognito-auth/aws"
   version = "~>1.0"
   project = "videoStreamer"
   env     = "dev"
