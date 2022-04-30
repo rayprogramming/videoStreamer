@@ -59,7 +59,7 @@ jobs:
         id: fmt
         run: terraform fmt -check
         continue-on-error: false
-        
+
       - name: Terraform Init
         id: init
         run: terraform init -upgrade
@@ -83,8 +83,15 @@ jobs:
         with:
           name: frontend
           path: frontend/dist
+      - name: Read secrets from AWS Secrets Manager into environment variables
+        uses: abhilash1in/aws-secrets-manager-action@v2.0.0
+        with:
+          secrets: |
+            cdn_bucket
+            video/cdn/bucket
+          parse-json: true
       - name: sync
         id: sync
         working-directory: frontend/dist
         run: |
-          aws s3 sync . s3://video.rayprogramming.com
+          aws s3 sync . s3://${CDN_BUCKET}

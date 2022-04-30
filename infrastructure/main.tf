@@ -25,17 +25,18 @@ provider "aws" {
 data "aws_route53_zone" "selected" {
   name = var.root_domain
 }
-
 module "frontend" {
-  source = "./frontend/"
-  name   = "video"
-  domain = data.aws_route53_zone.selected.name
-  zoneid = data.aws_route53_zone.selected.zone_id
+  source  = "rayprogramming/videoStreamer-cloudfront/aws"
+  version = "~>2.0"
+  name    = "video"
+  domain  = data.aws_route53_zone.selected.name
+  zone_id = data.aws_route53_zone.selected.zone_id
 }
 
-module "backend_dev" {
-  source  = "./backend"
+module "users" {
+  source  = "rayprogramming/rayprogramming-cognito-auth/aws"
+  version = "~>1.0"
   project = "videoStreamer"
   env     = "dev"
-  zoneid  = data.aws_route53_zone.selected.zone_id
+  zone_id = data.aws_route53_zone.selected.zone_id
 }
