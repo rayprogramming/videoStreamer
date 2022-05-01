@@ -83,13 +83,11 @@ jobs:
         with:
           name: frontend
           path: frontend/dist
-      - name: Read secrets from AWS Secrets Manager into environment variables
-        uses: abhilash1in/aws-secrets-manager-action@v2.0.0
+      - name: Read secrets from AWS Paramater Store into environment variables
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
         with:
-          secrets: |
-            cdn_bucket
-            video/cdn/bucket
-          parse-json: true
+          ssm_parameter: "/build-secrets/${{ env.BUILD_STAGE }}/cloudflare-account-id"
+          env_variable_name: "CDN_BUCKET"
       - name: sync
         id: sync
         working-directory: frontend/dist
