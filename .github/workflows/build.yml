@@ -87,7 +87,7 @@ jobs:
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
         with:
           ssm_parameter: "video/cdn/bucket"
-          env_variable_name: "cloudflare_account_id"
+          env_variable_name: "CDN_BUCKET"
       - name: sync
         id: sync
         working-directory: frontend/dist
