@@ -26,16 +26,14 @@ data "aws_route53_zone" "selected" {
   name = var.root_domain
 }
 module "frontend" {
-  source  = "rayprogramming/videoStreamer-cloudfront/aws"
-  version = "~>2.0"
+  source  = "git@github.com:rayprogramming/terraform-aws-videoStreamer-cloudfront.git"
   name    = "video"
   domain  = data.aws_route53_zone.selected.name
   zone_id = data.aws_route53_zone.selected.zone_id
 }
 
 module "users" {
-  source  = "rayprogramming/cognito-auth/aws"
-  version = "~>1.0"
+  source  = "git@github.com:rayprogramming/terraform-aws-cognito-auth.git"
   project = "videoStreamer"
   env     = "dev"
   zone_id = data.aws_route53_zone.selected.zone_id
