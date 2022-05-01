@@ -16,8 +16,8 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_frontend"></a> [frontend](#module\_frontend) | rayprogramming/videoStreamer-cloudfront/aws | ~>2.0 |
-| <a name="module_users"></a> [users](#module\_users) | rayprogramming/cognito-auth/aws | ~>1.0 |
+| <a name="module_frontend"></a> [frontend](#module\_frontend) | git@github.com:rayprogramming/terraform-aws-videoStreamer-cloudfront.git | n/a |
+| <a name="module_users"></a> [users](#module\_users) | git@github.com:rayprogramming/terraform-aws-cognito-auth.git | n/a |
 
 ## Resources
 

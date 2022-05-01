@@ -3,12 +3,12 @@ permissions:
       id-token: write
       contents: read    # This is required for actions/checkout@v2
       pull-requests: write
-on:
-  schedule:
-    - cron: '30 20 * * 0'
-  push:
-    branches:
-      - main  # Set a branch to deploy
+# on:
+#   schedule:
+#     - cron: '30 20 * * 0'
+#   push:
+#     branches:
+#       - main  # Set a branch to deploy
 
 jobs:
   frontend_plan:
