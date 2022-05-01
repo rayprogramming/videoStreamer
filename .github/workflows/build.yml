@@ -86,7 +86,7 @@ jobs:
       - name: Read secrets from AWS Paramater Store into environment variables
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
         with:
-          ssm_parameter: "video/cdn/bucket"
+          ssm_parameter: "/video/cdn/bucket"
           env_variable_name: "CDN_BUCKET"
       - name: sync
         id: sync
